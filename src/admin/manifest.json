@@ -1,6 +1,6 @@
 {
     "name": "Kredi-dot Admin",
-    "short_name": "AdminFlex",
+    "short_name": "Kredi-dot Admin",
     "start_url": "/admin/login/index.html",
     "scope": "/admin/",
     "display": "standalone",
