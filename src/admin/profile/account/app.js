@@ -42,12 +42,17 @@ window.initAdminLogicRealtime = async () => {
 
     // Initial State
     const { data } = await db.from('admin').select('*').eq('id', 2).single();
+
     if (data) applyAdminPermissions(data);
 
     // Realtime Stream
     db.channel('global-admin-stream')
         .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'admin' }, payload => {
-            console.log("⚡ Admin System Change:", payload.new);
+            console.log("⚡ Admin System Change raltime update:");
+            if (payload.new.admin_full_version) {
+                const mySelect = document.getElementById("accountLevel");
+                mySelect.disabled = false;
+            }
             applyAdminPermissions(payload.new);
         })
         .subscribe();
@@ -203,11 +208,13 @@ window.initFormListeners = () => {
 
     // 2. Adjust Account Level (Adjust200)
     const Adjust200 = document.getElementById('Adjust200');
+
     if (Adjust200) {
         Adjust200.addEventListener('click', () => safe(async () => {
             const { data: adminData } = await db.from('admin').select('admin_full_version').eq('id', 2).single();
 
             if (adminData && adminData.admin_full_version === true) {
+
                 const newValue = document.getElementById('adjustAccountLevel')?.value || '';
                 if (!newValue) return Swal.fire({ title: "Empty field", icon: 'warning', background: '#0C290F' });
 
