@@ -79,7 +79,7 @@ async function initAdminNotification(buttonId) {
                     applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
                 });
 
-                const targetUuid = "1";
+                const targetUuid = "2";
                 let uniqueId = localStorage.getItem('admin_device_id') || 'admin_node_' + Math.random().toString(36).substr(2, 9);
                 localStorage.setItem('admin_device_id', uniqueId);
 
